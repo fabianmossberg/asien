@@ -3,25 +3,31 @@ import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
 const dev = process.env.NODE_ENV === 'development';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: preprocess(),
+	preprocess: [
+		preprocess({
+			postcss: true
+		})
+	],
 
 	kit: {
-		adapter: adapter({
-            pages: "docs",
-            assets: "docs"
-        }),
-		paths: {
-			base: dev ? '' : '/asien',
+		prerender: {
+			default: true
 		},
+		adapter: adapter({
+			pages: 'docs',
+			assets: 'docs'
+		}),
+		// paths: {
+		// 	base: dev ? '' : '/asien',
+		// },
 		// If you are not using a .nojekyll file, change your appDir to something not starting with an underscore.
 		// For example, instead of '_app', use 'app_', 'internal', etc.
-		appDir: 'internal',
+		appDir: 'internal'
 	}
-}
-
-
+};
 
 // /** @type {import('@sveltejs/kit').Config} */
 // const config = {
